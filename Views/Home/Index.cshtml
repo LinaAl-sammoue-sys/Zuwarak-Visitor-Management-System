@@ -1,0 +1,217 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>زوّارك | نظام إدارة الزوار</title>
+
+    <!-- Bootstrap Minty Theme -->
+    <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.rtl.min.css">
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: "Tajawal", sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            padding-top: 10px;
+            padding-bottom: 15px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        /* حجم روابط القائمة */
+        .navbar-nav .nav-link {
+            font-size: 1.08rem;
+            padding: 10px 14px;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 70vh;
+            padding-top: 120px;
+            background: url('/images/home2-bg.jpg.jpg') center / cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.55);
+            }
+
+            .hero .container {
+                position: relative;
+                z-index: 2;
+            }
+
+            .hero h1 {
+                color: #ffffff; 
+                font-size: 3rem;
+                font-weight: 800;
+                margin-bottom: 15px;
+            }
+
+                .hero h1 .brand-name {
+                    color: #7fd1b9; 
+                }
+
+            .hero p {
+                color: #ffffff;
+                font-size: 2rem;
+                font-weight: 800;
+                margin-bottom: 35px;
+            }
+
+            .hero a {
+                color: #ffffff;
+                font-size: 3rem;
+                font-weight: 600;
+                margin-bottom: 35px;
+            }
+
+            .hero .btn {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+                border-radius: 30px;
+                box-shadow: 0 6px 15px rgba(0,0,0,.25);
+                transition: all .3s ease;
+            }
+
+                .hero .btn:hover {
+                    transform: translateY(-3px);
+                }
+
+        /* ===== FEATURES ===== */
+        .feature-box {
+            padding: 25px;
+            border-radius: 12px;
+            transition: transform .3s ease;
+            font-size: 1.5rem;
+            font-weight: 200;
+            margin-bottom: 35px;
+        }
+
+            .feature-box:hover {
+                transform: translateY(-5px);
+            }
+
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 28px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        /* دخول */
+        .status-in {
+            background-color: #5fb3a2;
+        }
+
+        /* خروج */
+        .status-out {
+            background-color: #6c757d; 
+        }
+
+        /* لم يتم بعد */
+        .status-pending {
+            background-color: #adb5bd;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <div class="container">
+            <h1>مرحباً بك في <span class="brand-name">زوّارك</span></h1>
+            <p>نظام احترافي لتسجيل وإدارة الزوار داخل المؤسسات والمباني</p>
+
+            <div class="d-flex justify-content-center gap-3">
+                <a class="btn btn-primary btn-lg" asp-controller="Account" asp-action="Login">
+                      موظف <i class="bi bi-person-standing"></i>
+                </a>
+
+                <a class="btn btn-primary btn-lg" asp-controller="Registration" asp-action="Index">
+                     زائر <i class="bi bi-person-walking"></i>
+                </a>
+            </div>
+
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section class="py-5">
+        <div class="container">
+            <h3 class="text-center mb-5 fw-bold">مميزات النظام</h3>
+
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="feature-box bg-white shadow text-center">
+                        <h5 class="fw-bold mb-2"> تسجيل سريع <i class="bi bi-person-fill-add fs-1"></i> </h5>
+                        <p>سجّل بيانات الزائر خلال ثوانٍ بدون أي تعقيد</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="feature-box bg-white shadow text-center">
+                        <h5 class="fw-bold mb-2"> QR Code <i class="bi bi-qr-code-scan fs-1"></i></h5>
+                        <p>إنشاء رمز دخول للزائر لتسهيل عملية التحقق</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="feature-box bg-white shadow text-center">
+                        <h5 class="fw-bold mb-2"> تتبع الدخول <i class="bi bi-door-open fs-1"></i></h5>
+                        <p>متابعة أوقات الدخول والخروج لكل زائر</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="feature-box bg-white shadow text-center">
+                        <h5 class="fw-bold mb-2"> لوحة تحكم <i class="bi bi-menu-button-wide-fill fs-1"></i></h5>
+                        <p>إدارة كاملة من قبل موظفي الاستقبال</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-primary text-white text-center p-3">
+        © 2025 نظام زوّارك — إدارة الزوار للمؤسسات
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

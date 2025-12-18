@@ -1,0 +1,66 @@
+﻿
+@model IEnumerable<Zuwarak.Models.Employee>
+
+@{
+    ViewData["Title"] = "قائمة الموظفين";
+}
+
+<div class="container mt-4">
+
+    <div lass="d-flex justify-content-between mb-3">
+        <h2> قائمة الموظفين <i class="bi bi-people-fill"></i></h2>
+<hr />
+        <a asp-action="AddEmployee" class="btn btn-primary">
+            إضافة موظف
+        </a>
+    </div>
+    <hr />
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-center">الاسم</th>
+                <th class="text-center">الوظيفة</th>
+                <th class="text-center">القسم</th>
+                <th class="text-center">الدور</th>
+                <th class="text-center">البريد</th>
+                <th class="text-center">الهاتف</th>
+                <th class="text-center">الإجراءات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var emp in Model)
+            { 
+            <tr>
+                    <td class="text-center">@emp.FullName</td>
+                    <td class="text-center">@emp.JobTitle</td>
+                    <td class="text-center">@emp.Department</td>
+                    <td class="text-center">
+                        <span class="badge bg-info">
+                            @emp.Role
+                        </span>
+                    </td>
+                    <td class="text-center">@emp.Email</td>
+                    <td class="text-center">@emp.Phone</td>
+                    <td>
+                    <a asp-action="EditEmployee" asp-route-id="@emp.Id" class="btn btn-warning btn-sm">  تعديل</a>
+
+                        <form asp-action="DeleteEmp"
+                          asp-route-id="@emp.Id"
+                          method="post"
+                          style="display:inline;"
+                          onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            حذف
+                        </button>
+                        </form>
+      
+                </tr> }
+
+        </tbody>
+        </table>
+
+</div>

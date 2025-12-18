@@ -1,0 +1,67 @@
+﻿@model Zuwarak.Models.RegisterVisit
+
+@{
+    ViewData["Title"] = "تسجيل زيارة";
+}
+
+<h2 class="text-center mt-4"> تسجيل زيارة <i class="bi bi-building-fill-add fs-1"></i> </h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["Success"]
+    </div>
+}
+
+<form asp-controller="Registration" asp-action="Index" method="post" enctype="multipart/form-data" class="mt-4 container" style="max-width:600px;">
+    <div class="form-group mb-3">
+        <label>الأسم كامل</label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    
+    <div class="form-group mb-3">
+        <label>رقم الهوية/جواز السفر</label>
+        <input asp-for="NationalId" class="form-control" />
+        <span asp-validation-for="NationalId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>البريد الإلكتروني</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>رقم الهاتف</label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>الجهة التي تريد مقابلتها</label>
+        <input asp-for="TargetPerson" class="form-control" />
+        <span asp-validation-for="TargetPerson" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>سبب الزيارة</label>
+        <input asp-for="VisitPurpose" class="form-control" />
+        <span asp-validation-for="VisitPurpose" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>رفع صورة الهوية (اختياري)</label>
+        <input asp-for="IDImage" type="file" class="form-control" />
+        <span asp-validation-for="IDImage" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100 py-2">تسجيل الزيارة</button>
+    
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,59 @@
+﻿@model List<Zuwarak.Models.Visitor>
+
+<div class="container mt-4">
+
+    <h2 class="mb-4"> <i class="bi bi-person-raised-hand"></i> لوحة إستقبال الزوار</h2>
+
+    <form method="get" class="mb-3">
+
+        <input type="text" name="search" class="form-control" placeholder="بحث عن زائر بالاسم..." />
+
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th> الاسم </th>
+                <th> الهوية </th>
+                <th> الهاتف </th>
+                <th> الهدف </th>
+                <th> تأكيد الوصول </th>
+                <th>تسجيل الخروج</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            @foreach (var v in Model) { 
+            <tr>
+                <td>@v.FullName </td>
+                <td> @v.NationalId </td>
+                <td> @v.Phone</td>
+                <td> @v.VisitPurpose</td>
+                <td>
+                        @if (!v.IsArrived)
+                        {
+                        <a href="/Reception/ConfirmArrival/@v.Id" class="btn btn-success btn-sm">Confirm Arrival</a>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Arrived</span>
+                        }
+                    </td>
+
+                    <td>
+                        @if (!v.IsCheckout)
+                        {
+                        <a href="/Reception/Checkout/@v.Id" class="btn btn-danger btn-sm">Checkout</a>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Done</span>
+                        }
+                    </td>
+            </tr>
+            
+            }
+        </tbody>
+    </table>
+    </div>

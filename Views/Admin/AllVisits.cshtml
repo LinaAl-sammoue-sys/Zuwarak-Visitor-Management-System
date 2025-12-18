@@ -1,0 +1,78 @@
+﻿@model List<Zuwarak.Models.Visitor>
+
+@{
+    ViewData["Title"] = "كل الزيارات";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">  <i class="bi bi-menu-button-wide-fill"></i> جميع الزيارات </h2>
+
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label class="form-label">من تاريخ</label>
+            <input type="date" name="fromDate" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">إلى تاريخ</label>
+            <input type="date" name="toDate" class="form-control" />
+        </div>
+
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">
+                 بحث
+            </button>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>الاسم</th>
+                <th>رقم الهوية</th>
+                <th>سبب الزيارة</th>
+                <th>تاريخ الزيارة</th>
+                <th>الدخول</th>
+                <th>الخروج</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach(var v in Model)
+            {
+                <tr>
+                    <td>@v.FullName</td>
+                    <td>@v.NationalId</td>
+                    <td>@v.VisitPurpose</td>
+                    <td>@v.VisitDate.ToString("yyyy-MM-dd HH:mm")</td>
+
+                    <td>
+                        @if (v.IsArrived)
+                        {
+                            <span class="status-badge status-in">✔</span>
+                        }
+                        else
+                        {
+                            <span class="status-badge status-pending">—</span>
+                        }
+                    </td>
+
+                    <td>
+                        @if (v.IsCheckout)
+                        {
+                            <span class="status-badge status-out">✔</span>
+                        }
+                        else
+                        {
+                            <span class="status-badge status-pending">—</span>
+                        }
+                    </td>
+
+                    </tr>
+                    }
+        </tbody>
+        </table>
+
+    </div>
+    

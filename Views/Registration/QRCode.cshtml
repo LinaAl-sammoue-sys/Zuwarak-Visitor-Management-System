@@ -1,0 +1,27 @@
+﻿@model Zuwarak.Models.Visitor
+
+<h2 class="text-center mt-4">    الخاص بك QR Code  </h2>
+
+<p>الاسم:  @Model.FullName</p>
+<p>تاريخ الزيارة:  @Model.VisitDate</p>
+<p>الجهة التي تريد مقابلتها:  @Model.TargetPerson</p>
+<p>سبب الزيارة:  @Model.VisitPurpose</p>
+
+<!-- عرض الصورة المرفوعة -->
+@if (!string.IsNullOrEmpty(Model.IDImagePath))
+{
+     <p>صورة الهوية :</p>
+    <img src="@Model.IDImagePath" class="img-thumbnail mb-3" style="max-width:200px;" />
+}
+
+<!-- عرض QR Code -->
+
+<img src="@ViewBag.QRCodeImage" alt="QR Code" class="d-block mx-auto my-4" />
+
+<!-- زر تحميل QR Code -->
+
+<a href="@ViewBag.QRCodeImage" download="@($"QRCode_{Model.Id}.png")" class="btn btn-primary d-block mx-auto mb-2">تحميل QR Code</a>
+
+<!-- زر طباعة الصفحة -->
+
+<button onclick="window.print()" class="btn btn-success d-block mx-auto">طباعة QR Code</button>

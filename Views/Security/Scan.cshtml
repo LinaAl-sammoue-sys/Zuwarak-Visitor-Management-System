@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Security - Scan QR";
+}
+
+<h2 class="text-center mt-3">
+    الخاص بالزوار QR مسح
+    
+   </h2>
+
+<div class="container mt-4">
+
+    <div id="reader" style="width:350px; margin:auto;"></div>
+
+    <div class="mt-4 p-3 border rounded bg-light" id="visitorInfo" style="display:none;">
+        <h4>بيانات الزائر</h4>
+
+        <p><b>الاسم:</b> <span id="vName"></span></p>
+        <p><b>وقت الزيارة:</b> <span id="vDate"></span></p>
+        <p><b>الهدف:</b> <span id="vPurpose"></span></p>
+        <p><b>الدخول:</b> <span id="vArrived"></span></p>
+        <p><b>الخروج:</b> <span id="vCheckout"></span></p>
+
+        <button class="btn btn-success mt-2" id="btnArrival">Confirm Arrival</button>
+        <button class="btn btn-danger mt-2" id="btnCheckout">Confirm Checkout</button>
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+   
+    function extractVisitorId(qrText) {
+        try {
+            
+            const after = qrText.split("VisitorID:")[1];
+            if (!after) return null;
+            const idPart = after.split(';')[0].trim();
+            return idPart;
+        } catch (err) {
+            console.error("failed to extract id", err);
+            return null;
+        }
+    }
+
+    async function fetchJson(url, options = {}) {
+        try {
+            const res = await fetch(url, options);
+            if (!res.ok) {
+                const txt = await res.text();
+                throw new Error(`HTTP ${res.status} - ${txt}`);
+            }
+            return await res.json();
+        } catch (err) {
+            console.error("Fetch error:", err);
+            return { success: false, error: err.message };
+        }
+    }
+
+    async function loadVisitor(id) {
+        const result = await fetchJson(`/Security/GetVisitor?id=${encodeURIComponent(id)}`);
+        if (!result || !result.success) {
+            alert("خطأ في جلب بيانات الزائر أو الزائر غير موجود.");
+            return null;
+        }
+        return result.data;
+    }
+
+    function showVisitor(v) {
+        document.getElementById("visitorInfo").style.display = "block";
+
+        document.getElementById("vName").innerText = v.fullName ?? "-";
+        
+        let dt = v.visitDate ? new Date(v.visitDate) : null;
+        document.getElementById("vDate").innerText = dt ? dt.toLocaleString() : "-";
+
+        document.getElementById("vPurpose").innerText = v.visitPurpose ?? "-";
+        document.getElementById("vArrived").innerText = v.isArrived ? "✔" : "❌";
+        document.getElementById("vCheckout").innerText = v.isCheckout ? "✔" : "❌";
+
+        
+        const btnA = document.getElementById("btnArrival");
+        const btnC = document.getElementById("btnCheckout");
+
+        btnA.disabled = v.isArrived; 
+        btnC.disabled = !v.isArrived || v.isCheckout; 
+
+        btnA.onclick = async () => {
+            const r = await fetchJson(`/Security/ConfirmArrival?id=${v.id}`, { method: "POST" });
+            if (r && r.success) {
+                alert("تم تسجيل دخول الزائر");
+                const updated = await loadVisitor(v.id);
+                if (updated) showVisitor(updated);
+            } else {
+                alert("فشل تسجيل الدخول");
+            }
+        };
+
+        btnC.onclick = async () => {
+            const r = await fetchJson(`/Security/ConfirmCheckout?id=${v.id}`, { method: "POST" });
+            if (r && r.success) {
+                alert("تم تسجيل خروج الزائر");
+                const updated = await loadVisitor(v.id);
+                if (updated) showVisitor(updated);
+            } else {
+                alert("فشل تسجيل الخروج");
+            }
+        };
+    }
+
+    
+    async function onScanSuccess(decodedText, decodedResult) {
+        console.log("Scanned text:", decodedText);
+        const id = extractVisitorId(decodedText);
+        if (!id) {
+            alert("تعذر قراءة رقم الزائر من الـ QR");
+            return;
+        }
+
+        const visitor = await loadVisitor(id);
+        if (visitor) {
+            showVisitor(visitor);
+        }
+    }
+
+    function onScanFailure(error) {
+        
+        console.warn(`Scan failure: ${error}`);
+    }
+
+    
+    const html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", { fps: 10, qrbox: 200, rememberLastUsedCamera: true }, /* verbose= */ false);
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+</script>

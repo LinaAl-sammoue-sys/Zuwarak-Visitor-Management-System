@@ -1,0 +1,37 @@
+﻿@{
+
+    ViewData["Title"] = "لوحة التحكم";
+
+}
+
+<h2 class="mt-4">لوحة التحكم</h2>
+
+
+<div class="row mt-4">
+
+    <div class="col-md-3">
+        <a class="btn btn-primary w-100" asp-controller="Admin" asp-action="AddEmployee">
+            <i class="bi bi-person-fill-add "></i> إضافة موظف جديد
+            </a>
+    </div>
+
+    <div class="col-md-3">
+    <a class="btn btn-primary w-100" asp-controller="Admin" asp-action="EmployeesList">
+            <i class="bi bi-people-fill"></i>  الموظفين    
+    </a>
+    </div>
+
+    <div class="col-md-3">
+        <a class="btn btn-success w-100" asp-controller="Admin" asp-action="AllVisits">
+            <i class="bi bi-menu-button-wide-fill"></i>  جميع الزيارات
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a class="btn btn-danger w-100" asp-controller="Admin" asp-action="Dashboard">
+            <i class="bi bi-reception-4"></i>  إحصائيات
+        </a>
+    </div>
+
+
+</div>
