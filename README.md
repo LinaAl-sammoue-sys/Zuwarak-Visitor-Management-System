@@ -29,6 +29,7 @@ A professional visitor management system for organizations.
 1. Update connection string in `appsettings.json`
 2. Run migrations
 3. Run the project
-
+## video of the project
+https://drive.google.com/file/d/1y-4_4K1pLVXkDAJi8oXx8saVsOBN9dux/view?usp=sharing
 ---
 Developed by **LINA ALSAMMOU'E**
